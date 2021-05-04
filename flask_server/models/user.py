@@ -5,7 +5,6 @@ def save(data):
     username = data["username"]
     password = data["password"]
     hashed = bcrypt.generate_password_hash(password).decode('utf-8')
-    print(hashed)
     try:
         cursor = db.conn.cursor()
         cursor.execute(
@@ -22,7 +21,6 @@ def save(data):
 def signin(data):
     username = data["username"]
     password = data["password"]
-    print("here")
     try:
         cursor = db.conn.cursor()
         cursor.execute(

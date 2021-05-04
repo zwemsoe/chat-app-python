@@ -1,5 +1,5 @@
 from flask_cors import CORS
-from flask import Flask
+from flask import Flask, session
 from db import DB
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
@@ -32,11 +32,14 @@ app.add_url_rule('/api/user', 'authuser', userController.authuser, methods=['GET
 app.add_url_rule('/api/logout', 'logout', userController.logout, methods=['GET'])
 
 app.add_url_rule('/api/messages/<roomcode>', 'fetchOldMessages', roomController.fetchOldMessages, methods=['GET'])
+app.add_url_rule('/api/rooms/<username>', 'getJoinedRooms', roomController.getJoinedRooms, methods=['GET'])
+app.add_url_rule('/api/leaveRoom', 'leaveRoom', roomController.leaveRoom, methods=['POST'])
+app.add_url_rule('/api/deleteRoom', 'deleteRoom', roomController.deleteRoom, methods=['POST'])
 
 # SOCKET event-controllers
 socketio.on_event('join', roomController.joinRoom)
 socketio.on_event('send message', roomController.sendMessage)
 
-
+    
 if __name__ == '__main__':
     socketio.run(app)

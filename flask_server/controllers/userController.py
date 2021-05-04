@@ -17,7 +17,6 @@ def login():
 
 def register():
     data = request.get_json()
-    print(data)
     result = user.save(data)
     return jsonify({
         "success": result
